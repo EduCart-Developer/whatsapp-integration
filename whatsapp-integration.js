@@ -1,5 +1,4 @@
 <script>
-
 function handleCTAClick(event, link) {
   event.preventDefault();
   openPopUpFirst(link);
@@ -28,9 +27,11 @@ function callHubspotApi(mob) {
   var latestSubject = document
     .getElementById("data-attribute-subject")
     .getAttribute("data-attribute");
-  schoolBoard = "{{wf {&quot;path&quot;:&quot;board:name&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}";
-  schoolClass = "{{wf {&quot;path&quot;:&quot;class:name&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}";
-  latestSubject = "{{wf {&quot;path&quot;:&quot;subject:name&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}";
+  var typeOfContent = document
+    .getElementById("data-attribute-type-of-content")
+    .getAttribute("data-attribute");
+  var subscribed = document.getElementById("subscribeCheckbox").checked;
+ 
   const hubspot = {
     properties: {
       mobilephone: Number("91" + mob),
@@ -38,6 +39,8 @@ function callHubspotApi(mob) {
       new_class_form: schoolClass,
       new_submitted_subject__latest___cloned_: latestSubject,
       offline_or_online_teacher: "Whatsapp OTP - Students",
+      subscribed_for_premium_pdfs: subscribed ? "True" : "False",
+      type_of_content: typeOfContent,
     },
   };
   fetch("https://preprod-api.tbplabs.tech/services/contactHubspotAPICall", {
